@@ -1,0 +1,34 @@
+<project name="com.itemis.smartmeter" default="all">
+	<property name="mps.home" value=""/>
+	<property name="mbeddr.allInOne.artifacts" value=""/>
+	<property name="base.dir" value=""/>
+
+	<echo>Java/JVM version: ${ant.java.version}</echo> 
+	<echo>Java/JVM detail version: ${java.version}</echo>
+	
+	<macrodef name="build">
+		<attribute name="msg"/>
+		<attribute name="dir"/>
+		<sequential>
+			<echo>Build the @{msg} at @{dir}</echo>
+			<!--<ant dir="@{dir}" antfile="build.xml">
+				<target name="cleanSources"/>
+	            <target name="clean"/>
+	            <target name="generate"/>
+	            <target name="build"/>
+	            <target name="check"/>
+				<target name="cleanTmp"/>
+			</ant>-->
+		</sequential>
+	</macrodef>
+	
+	<target name="buildBootstrap">
+		<build msg="Bootstrap Build" dir="builds/bootstrap"/>
+	</target>
+
+	<target depends="buildBootstrap" name="buildAll">
+	</target>
+
+	<target depends="buildAll" name="all">
+	</target>
+</project>
