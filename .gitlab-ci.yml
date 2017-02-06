@@ -1,0 +1,15 @@
+image: frekele/ant
+
+variables:
+  VERSION: "0.1.0"
+
+ant build:
+  stage: build
+#   image: coolya/gcc-avr:4.9
+  artifacts:
+    paths:
+    - lib/build/
+    expire_in: 1 week
+  script:
+    - pwd
+    - ant
