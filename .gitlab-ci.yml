@@ -1,12 +1,10 @@
-image: frekele/ant
+image: dtsunke/mps-mbeddr
 
 variables:
   VERSION: "0.1.0"
 
-ant build:
+mps build:
   stage: build
   script:
     - pwd
-    - ant
-    - cd ../../../
-    - ls
+    - ant -Dmps.home="/usr/MPS 3.4" -Dmbeddr.allInOne.artifacts="/usr"
