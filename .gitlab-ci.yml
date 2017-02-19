@@ -13,9 +13,12 @@ mbeddr build:
     - mps
     - mbeddr
   script:
+    - java -version
+    - ./gradlew tasks
     - pwd
   #   - ant -Dmps.home="/usr/MPS 3.4" -Dmbeddr.allInOne.artifacts="/usr"
-    - ./gradle
+    - gradle -v
+    - gradle
   allow_failure: false
   artifacts:
     expire_in: 1 week
