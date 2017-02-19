@@ -17,8 +17,8 @@ mbeddr build:
   script:
     - pwd
     - ./gradlew tasks
-    - gradle -v
-    - gradle
+    - ./gradlew -v
+    - ./gradlew
   allow_failure: true
   artifacts:
     expire_in: 1 week
