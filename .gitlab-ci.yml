@@ -1,13 +1,18 @@
-image: java:8
+image: java:8-jdk
 
 variables:
   VERSION: "0.1.0"
 
 before_script:
   - java -version
-  - chmod +x gradlew
+  - export GRADLE_USER_HOME=`pwd`/.gradle
   - gradle -v
 
+cache:
+  paths:
+    - .gradle/wrapper
+    - .gradle/caches
+    
 mbeddr build:
   stage: build
   script:
