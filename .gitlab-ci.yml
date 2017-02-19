@@ -1,5 +1,4 @@
-variables:
-  VERSION: "0.1.0"
+image: java:8
 
 before_script:
   - java -version
@@ -14,7 +13,6 @@ mbeddr build:
   stage: build
   tags: 
   - gradle
-  image: java:8-jdk
   script:
   - pwd
   - ./gradlew tasks
