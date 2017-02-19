@@ -7,11 +7,6 @@ before_script:
   - java -version
   - export GRADLE_USER_HOME=`pwd`/.gradle
 
-cache:
-  paths:
-    - .gradle/wrapper
-    - .gradle/caches
-
 mbeddr build:
   stage: build
   script:
