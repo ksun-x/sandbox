@@ -8,6 +8,11 @@ before_script:
 
 mbeddr build:
   stage: build
+  tags:
+    - java
+    - gradle
+    - mps
+    - mbeddr
   script:
     - pwd
   #   - ant -Dmps.home="/usr/MPS 3.4" -Dmbeddr.allInOne.artifacts="/usr"
