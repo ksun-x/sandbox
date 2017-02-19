@@ -6,18 +6,17 @@ variables:
 before_script:
   - java -version
   - export GRADLE_USER_HOME=`pwd`/.gradle
-  - gradle -v
 
 cache:
   paths:
     - .gradle/wrapper
     - .gradle/caches
-    
+
 mbeddr build:
   stage: build
   script:
     - pwd
-    - gradle
+    - ./gradlew tasks
   allow_failure: true
   artifacts:
     expire_in: 1 week
