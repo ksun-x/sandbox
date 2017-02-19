@@ -1,3 +1,5 @@
+image: java:8
+
 variables:
   VERSION: "0.1.0"
 
@@ -11,11 +13,10 @@ mbeddr build:
     - gradle
     - mps
     - mbeddr
-  image: java:8
   script:
     - pwd
   #   - ant -Dmps.home="/usr/MPS 3.4" -Dmbeddr.allInOne.artifacts="/usr"
-    - gradle
+    - ./gradle
   allow_failure: false
   artifacts:
     expire_in: 1 week
