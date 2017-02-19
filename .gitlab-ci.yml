@@ -1,14 +1,10 @@
+image: java:8
+
 variables:
   VERSION: "0.1.0"
 
 mbeddr build:
   stage: build
-  tags:
-    - java
-    - gradle
-    - mps
-    - mbeddr
-  image: java:8
   script:
     - java -version
     - ./gradlew tasks
