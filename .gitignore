@@ -42,5 +42,5 @@ build.properties
 *.ear
 *.zip
 
-nexus/**
+nexus/mps
 !gradle/**
