@@ -12,7 +12,8 @@ cache:
 
 mbeddr build:
   stage: build
-  tag: gradle
+  tags: 
+  - gradle
   image: java:8-jdk
   script:
   - pwd
@@ -21,4 +22,4 @@ mbeddr build:
   - ./gradlew
   allow_failure: false
   artifacts:
-  expire_in: 1 week
+    expire_in: 1 week
