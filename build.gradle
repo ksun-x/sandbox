@@ -1,0 +1,70 @@
+group 'com.mbeddr.'
+
+apply plugin: 'base'
+
+repositories {
+    maven {
+        url "https://projects.itemis.de/nexus/content/groups/OS"
+    }
+}
+
+// MPS/mbeddr version
+ext.mpsVersion = '3.4.3'
+ext.mbeddrVersion = '1.0.+'
+
+// MPS/mbeddr version
+ext.mpsDir = "nexus/mps"
+ext.mbeddrDir = 'nexus/mbeddr'
+
+configurations {
+    mps 
+    mbeddr
+}
+
+dependencies {
+    mps "com.jetbrains:mps:3.4.3"
+    mbeddr "com.mbeddr:allInOne:HEAD.1.0.17414.g6b779f5"
+}
+
+task resolveMPS(type: Copy) {
+    dependsOn configurations.mps
+    from {
+        configurations.mps.resolve().collect { zipTree(it) }
+    }
+    into mpsDir
+    finalizedBy 'resolveMbeddrAllInOne'
+    doLast {
+        println 'MPS artifact is downloaded from itemis Nexus repos and unzipped in ' + mpsDir
+    }
+}
+
+task resolveMbeddr(type: Copy) {
+    dependsOn configurations.mbeddr
+    from {
+        configurations.mbeddr.resolve()
+    }
+    into mbeddrDir
+     rename { String fileName ->
+        fileName.replace(fileName, 'com.mbeddr.allInOne.zip')
+    }
+    doLast {
+        println 'MPS artifact is downloaded from itemis Nexus repos and stored in ' + mbeddrDir
+    }
+}
+
+task resolveMbeddrAllInOne {
+    def mbeddrAllInOnePackage = new File(mbeddrDir+'/com.mbeddr.allInOne.zip')
+    if (!mbeddrAllInOnePackage.exists()) {
+        new URL('https://github.com/mbeddr/mbeddr.core/releases/download/nightly-410-MPS-3.4.3/com.mbeddr.allInOne-410-MPS-3.4.3.zip').withInputStream{ i -> mbeddrAllInOnePackage.withOutputStream{ it << i }}
+    }
+    finalizedBy 'ant-all'
+}
+
+ant.properties['mps.home'] = resolveMPS.destinationDir
+ant.properties['mbeddr.allInOne.artifacts'] = "$rootDir/" + mbeddrDir
+ant.importBuild('build.xml') { target -> 'ant-' + target }
+
+task buildAll (dependsOn: 'resolveMPS') {
+}
+
+defaultTasks 'buildAll'

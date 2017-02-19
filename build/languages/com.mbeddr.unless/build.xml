@@ -153,7 +153,6 @@
       <plugin path="${artifacts.mps}/plugins/mps-execution-api" />
       <plugin path="${artifacts.mps}/plugins/mps-execution-languages" />
       <plugin path="${artifacts.mps}/plugins/mps-testing" />
-      <plugin path="${artifacts.mps}/plugins/mps-vcs" />
       <plugin path="${build.tmp}/deps/com.mbeddr.allInOne/com.mbeddr.allInOne.zip/plugins/de-itemis-mps-selection" />
       <plugin path="${build.tmp}/deps/com.mbeddr.allInOne/com.mbeddr.allInOne.zip/plugins/de.itemis.mps.celllayout" />
       <plugin path="${build.tmp}/deps/com.mbeddr.allInOne/com.mbeddr.allInOne.zip/plugins/de.itemis.mps.editor.diagram" />
