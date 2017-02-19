@@ -3,14 +3,16 @@ image: java:8
 variables:
   VERSION: "0.1.0"
 
+before_script:
+  - java -version
+  - chmod +x gradlew
+  - gradle -v
+
 mbeddr build:
   stage: build
   script:
-    - java -version
-    - ./gradlew tasks
     - pwd
-    - gradle -v
     - gradle
-  allow_failure: false
+  allow_failure: true
   artifacts:
     expire_in: 1 week
