@@ -1,22 +1,18 @@
 variables:
   VERSION: "0.1.0"
 
-before_script:
-  - chmod +x gradlew
-
 mbeddr build:
   stage: build
-  image: java:8
   tags:
     - java
     - gradle
     - mps
     - mbeddr
+  image: java:8
   script:
     - java -version
     - ./gradlew tasks
     - pwd
-  #   - ant -Dmps.home="/usr/MPS 3.4" -Dmbeddr.allInOne.artifacts="/usr"
     - gradle -v
     - gradle
   allow_failure: false
