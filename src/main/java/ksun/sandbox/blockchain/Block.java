@@ -3,10 +3,15 @@ package ksun.sandbox.blockchain;
 import sun.nio.cs.UTF_8;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Block {
+    private static final int MINE_LIMIT = 1000;
+
     private String hash;
     private String previousHash;
     private String data;
@@ -20,23 +25,44 @@ public class Block {
         this.hash = calculateHash();
     }
 
-    // TODO
+    public boolean mineBlock (Pattern patten) {
+        String tempHash = getHash();
+        for (int i = 0; !patten.matcher(tempHash).matches(); i++) {
+            if (i + 1 >= MINE_LIMIT) {
+                return false;
+            }
+            nonce++;
+            tempHash = calculateHash();
+        }
+        setHash(tempHash);
+        return true;
+    }
+
     protected String calculateHash () {
         StringBuilder builder = new StringBuilder();
         builder.append(getPreviousHash());
-        builder.append(Long.toString(getTimeStamp()));
-        builder.append(Integer.toString(getNonce()));
+        builder.append(getTimeStamp());
+        builder.append(getNonce());
         builder.append(data);
 
-        byte[] bytes;
+        byte[] bytes = null;
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
-            bytes = messageDigest.digest(builder.toString().getBytes(UTF_8.INSTANCE));
+            bytes = messageDigest.digest(builder.toString().getBytes(StandardCharsets.UTF_8));
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
 
-        return "";
+        if (bytes == null) {
+            return null;
+        }
+
+        StringBuffer buffer = new StringBuffer();
+        for (byte b: bytes) {
+            buffer.append(String.format("%02x", b));
+        }
+
+        return buffer.toString();
     }
 
     public String getHash() {
