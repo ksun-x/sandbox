@@ -6,11 +6,18 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Block {
     private static final int MINE_LIMIT = 1000;
+    private static final int MAX_NONCE = 1000;
+    private static final Random random;
+
+    static {
+        random = new Random();
+    }
 
     private String hash;
     private String previousHash;
@@ -19,6 +26,7 @@ public class Block {
     private int nonce;
 
     public Block (String data, String previousHash, long timeStamp) {
+        this.nonce = random.nextInt(MAX_NONCE);
         this.data = data;
         this.previousHash = previousHash;
         this.timeStamp = timeStamp;
@@ -38,12 +46,16 @@ public class Block {
         return true;
     }
 
+    /***
+     *
+     * @return Hashcode in Hex of length 64
+     */
     protected String calculateHash () {
         StringBuilder builder = new StringBuilder();
         builder.append(getPreviousHash());
         builder.append(getTimeStamp());
         builder.append(getNonce());
-        builder.append(data);
+        builder.append(getData());
 
         byte[] bytes = null;
         try {

@@ -17,7 +17,7 @@ public class BlockchainTest {
 
     @BeforeClass
     public static void setUp() {
-        pattern = Pattern.compile("^0{4}.*");
+        pattern = Pattern.compile("^.{64}");
 
         Block genesisBlock = new Block ("The genesis block", "0", new Date().getTime());
         genesisBlock.mineBlock(pattern);
@@ -39,8 +39,12 @@ public class BlockchainTest {
             final String previousHash = i == 0 ? "0" : blockchain.get(i - 1).getHash();
             assertTrue(
                     blockchain.get(i).getHash().equals(blockchain.get(i).calculateHash())
-                            && previousHash.equals(blockchain.get(i).getPreviousHash())
-                            && pattern.matcher(blockchain.get(i).getHash()).matches()
+            );
+            assertTrue(
+                    previousHash.equals(blockchain.get(i).getPreviousHash())
+            );
+            assertTrue(
+                    pattern.matcher(blockchain.get(i).getHash()).matches()
             );
         }
     }
